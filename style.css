@@ -1,0 +1,81 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    background-image: url('https://png.pngtree.com/background/20220715/original/pngtree-blue-aesthetic-cloud-background-picture-image_1624792.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    margin: 0;
+  }
+  h2 {
+      font-family: 'Georgia', serif;
+      text-align: center;
+    color: rgb(27, 34, 43);
+  }
+  .container {
+       margin-top: 100px;
+      height: 450px;
+    width: 400px;
+    background-color: rgb(166, 195, 229,0.3);
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(5, 90, 142, 0.677);
+  }
+  
+  #chat-box {
+    height: 300px;
+    overflow-y: scroll;
+    border: 1px solid rgb(33, 116, 209);
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  input[type="text"] {
+      border-color: rgb(33, 116, 209);
+    width: 70%;
+    padding: 0.5rem;
+  }
+  
+  button {
+      float: right;
+    margin-left: 0.5rem;
+      border-color: rgb(33, 116, 209);
+    padding: 0.5rem 1rem;
+  }
+  button:hover {
+    background-color: #99bce1;
+  }
+                                                                                                                                                                                                                                                                  script.js                                                                                                                                                                                                                                                const socket = new WebSocket('ws://localhost:3000');
+  
+  const chatBox = document.getElementById('chat-box');
+  const input = document.getElementById('messageInput');
+  
+  // Display your message in chat and send to server
+  function sendMessage() {
+    const message = input.value.trim();
+    if (message) {
+      // Display locally
+      appendMessage(You: ${message});
+      
+      // Send to server
+      socket.send(message);
+      input.value = '';
+    }
+  }
+  
+  // Display any incoming message
+  socket.onmessage = (event) => {
+    appendMessage(Stranger: ${event.data});
+  };
+  
+  // Helper function to add message to chat box
+  function appendMessage(msg) {
+    const msgDiv = document.createElement('div');
+    msgDiv.textContent = msg;
+    chatBox.appendChild(msgDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+                                                                                                   
